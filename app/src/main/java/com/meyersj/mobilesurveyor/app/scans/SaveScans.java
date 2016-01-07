@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.zxing.Result;
+import com.meyersj.mobilesurveyor.app.util.Args;
 import com.meyersj.mobilesurveyor.app.util.Cons;
 import com.meyersj.mobilesurveyor.app.util.Utils;
 
@@ -48,7 +49,6 @@ public class SaveScans {
     private String mode;
     private HttpClient client;
 
-
     private class Scan {
         private Date date;
         private Bundle params;
@@ -66,7 +66,6 @@ public class SaveScans {
         }
     }
 
-
     public SaveScans(Context context, Bundle params) {
         this.url = params.getString(Cons.URL);
         this.user_id = params.getString(Cons.USER_ID);
@@ -76,7 +75,6 @@ public class SaveScans {
         this.context = context;
         this.currentLoc = new CurrentLocation();
         this.scansBuffer = new ArrayList<Scan>();
-
 
         Properties prop;
         prop = Utils.getProperties(this.context, Cons.PROPERTIES);
@@ -112,12 +110,12 @@ public class SaveScans {
     private Bundle buildParams(String uuid, String date) {
         Bundle params = new Bundle();
         params.putString(Cons.URL, url);
-        params.putString(Cons.USER_ID, user_id);
-        params.putString(Cons.LINE, line);
-        params.putString(Cons.DIR, dir);
-        params.putString(Cons.MODE, mode);
-        params.putString(Cons.UUID, uuid);
-        params.putString(Cons.DATE, date);
+        params.putString(Args.Scans.USER_ID, user_id);
+        params.putString(Args.Scans.RTE, line);
+        params.putString(Args.Scans.DIR, dir);
+        params.putString(Args.Scans.MODE, mode);
+        params.putString(Args.Scans.UUID, uuid);
+        params.putString(Args.Sca, date);
         params.putString(Cons.TYPE, Cons.SCAN);
         return params;
     }
@@ -151,13 +149,6 @@ public class SaveScans {
                 currentLoc.getLat() != null) {
             Log.d(TAG, "posting scan");
             postScan(rawResult, date);
-            //For debugging to write to csv
-            /*
-            Utils.appendCSV("current," +
-                    Utils.dateFormat.format(date) + "," +
-                    currentLoc.getAccuracy() + "," +
-                    currentLoc.getLat() + "," + currentLoc.getLon());
-            */
         }
         else {
             Log.d(TAG, "adding scan to buffer - other reasons");
@@ -170,62 +161,28 @@ public class SaveScans {
     }
 
     public void flushBuffer() {
-        //Integer total = 0;
-        //Integer count = 0;
-
         Log.d(TAG, "flushing buffer");
         for(Scan scan: scansBuffer) {
-            //total += 1;
             Float diff = Utils.timeDifference(currentLoc.getDate(), scan.getDate());
             Log.d(TAG, String.valueOf(diff));
 
             if(diff <= THRESHOLD) {
-                //count += 1;
                 post(scan.getParams());
                 Log.d(TAG, "using new location");
-                //For debugging to write to csv
-                /*
-                Utils.appendCSV("valid_buffer," +
-                        Utils.dateFormat.format(scan.getDate()) + "," +
-                        currentLoc.getAccuracy() + "," +
-                        currentLoc.getLat() + "," + currentLoc.getLon());
-                */
             }
-            else {
-                Log.d(TAG, "too old, deleting");
-                //For debugging to write to csv
-                /*
-                Utils.appendCSV("old_buffer," +
-                        Utils.dateFormat.format(scan.getDate()) + "," +
-                        currentLoc.getAccuracy() + "," +
-                        currentLoc.getLat() + "," + currentLoc.getLon());
-                */
-            }
-
         }
-        //for debug - show how many flushed records were valid
-        //String message = "Flush: count=" + String.valueOf(count) + " total=" + String.valueOf(total);
-        //Utils.longToastCenter(context, message);
         scansBuffer.clear();
     }
 
     private void post(Bundle params) {
-        params.putString(Cons.LAT, currentLoc.getLat());
-        params.putString(Cons.LON, currentLoc.getLon());
-        //Intent post = new Intent(context, PostService.class);
-        //post.putExtras(params);
-        //context.startService(post);
+        params.putString(Args.Scans.LAT, currentLoc.getLat());
+        params.putString(Args.Scans.LON, currentLoc.getLon());
 
         Utils.appendCSV("scans", buildScanRow(params));
         String[] paramsArray = getScanParams(params);
         PostTask task = new PostTask();
-        //currentTask = task;
         task.execute(paramsArray);
-
-
-
     }
-
 
     protected String buildScanRow(Bundle bundle) {
         String row = "";
@@ -240,21 +197,17 @@ public class SaveScans {
         return row;
     }
 
-
-
     protected String[] getScanParams(Bundle bundle) {
-        String[] params = new String[2];
-        JSONObject json = new JSONObject();
-        json.put(Cons.UUID, bundle.getString(Cons.UUID));
-        json.put(Cons.DATE, bundle.getString(Cons.DATE));
-        json.put(Cons.USER_ID, bundle.getString(Cons.USER_ID));
-        json.put(Cons.LINE, bundle.getString(Cons.LINE));
-        json.put(Cons.DIR, bundle.getString(Cons.DIR));
-        json.put(Cons.MODE, bundle.getString(Cons.MODE));
-        json.put(Cons.LON, bundle.getString(Cons.LON));
-        json.put(Cons.LAT, bundle.getString(Cons.LAT));
+        String[] params = new String[9];
         params[0] = Utils.getUrlApi(context) + "/insertScan";
-        params[1] = json.toJSONString();
+        params[1] = bundle.getString(Args.Scans.UUID);
+        params[2] = bundle.getString(Args.Scans.DATE);
+        params[3] = bundle.getString(Args.Scans.USER_ID);
+        params[4] = bundle.getString(Args.Scans.RTE);
+        params[5] = bundle.getString(Args.Scans.DIR);
+        params[6] = bundle.getString(Args.Scans.MODE);
+        params[7] = bundle.getString(Args.Scans.LAT);
+        params[8] = bundle.getString(Args.Scans.LON);
         return params;
     }
 
@@ -266,7 +219,14 @@ public class SaveScans {
 
         HttpPost post = new HttpPost(params[0]);
         ArrayList<NameValuePair> postParam = new ArrayList<NameValuePair>();
-        postParam.add(new BasicNameValuePair(Cons.DATA, params[1]));
+        postParam.add(new BasicNameValuePair(Args.Scans.UUID, params[1]));
+        postParam.add(new BasicNameValuePair(Args.Scans.DATE, params[2]));
+        postParam.add(new BasicNameValuePair(Args.Scans.USER_ID, params[3]));
+        postParam.add(new BasicNameValuePair(Args.Scans.RTE, params[4]));
+        postParam.add(new BasicNameValuePair(Args.Scans.DIR, params[5]));
+        postParam.add(new BasicNameValuePair(Args.Scans.MODE, params[6]));
+        postParam.add(new BasicNameValuePair(Args.Scans.LAT, params[7]));
+        postParam.add(new BasicNameValuePair(Args.Scans.LON, params[8]));
 
         try {
             post.setEntity(new UrlEncodedFormEntity(postParam));
@@ -291,7 +251,6 @@ public class SaveScans {
         protected String doInBackground(String[]... inParams) {
             String[] params = inParams[0];
             Log.d(TAG, "url:" + params[0]);
-            Log.d(TAG, "data:" + params[1]);
             return post(params);
         }
         @Override
@@ -299,6 +258,4 @@ public class SaveScans {
             Log.d(TAG, "onPostExecute(): " + response);
         }
     }
-
-
 }
