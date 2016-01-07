@@ -115,7 +115,7 @@ public class SaveScans {
         params.putString(Args.Scans.DIR, dir);
         params.putString(Args.Scans.MODE, mode);
         params.putString(Args.Scans.UUID, uuid);
-        params.putString(Args.Sca, date);
+        params.putString(Args.Scans.DATE, date);
         params.putString(Cons.TYPE, Cons.SCAN);
         return params;
     }
