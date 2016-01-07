@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 
 import com.meyersj.mobilesurveyor.app.R;
+import com.meyersj.mobilesurveyor.app.util.Args;
 import com.meyersj.mobilesurveyor.app.util.Cons;
 import com.meyersj.mobilesurveyor.app.util.Utils;
 
@@ -91,22 +92,20 @@ public class LoginActivity extends Activity {
                 String name = username.getText().toString();
                 String pass = password.getText().toString();
 
-                JSONObject json = new JSONObject();
-                json.put(Cons.USER_NAME, name);
-                json.put(Cons.PASSWORD, pass);
 
-                String credentials = json.toJSONString();
-
-                String[] params = new String[2];
+                String[] params = new String[3];
                 params[0] = Utils.getUrlApi(context) + "/verifyUser";
-                params[1] = credentials;
+                params[1] = name;
+                params[2] = pass;
 
                 //close keypad
                 InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
+                if (getCurrentFocus() != null) {
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
 
                 if(name.equals(anon_name) && pass.equals(anon_pass)) {
                     password.setText("");
@@ -132,14 +131,11 @@ public class LoginActivity extends Activity {
             }
         });
 
-
-
         skip_login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startCollection(test_user);
             }
         });
-
     }
 
     protected void startCollection(String username) {
@@ -154,7 +150,8 @@ public class LoginActivity extends Activity {
         protected String doInBackground(String[]... inParams) {
             String[] params = inParams[0];
             Log.d(TAG, "url:" + params[0]);
-            Log.d(TAG, "data:" + params[1]);
+            Log.d(TAG, "username:" + params[1]);
+            Log.d(TAG, "password:" + params[2]);
             return post(params);
         }
         @Override
@@ -170,7 +167,8 @@ public class LoginActivity extends Activity {
         HttpPost post = new HttpPost(params[0]);
 
         ArrayList<NameValuePair> postParam = new ArrayList<NameValuePair>();
-        postParam.add(new BasicNameValuePair(Cons.CRED, params[1]));
+        postParam.add(new BasicNameValuePair(Args.Login.USER_NAME, params[1]));
+        postParam.add(new BasicNameValuePair(Args.Login.PASSWORD, params[2]));
 
         try {
             post.setEntity(new UrlEncodedFormEntity(postParam));
@@ -200,20 +198,12 @@ public class LoginActivity extends Activity {
             Object obj = parser.parse(jsonInput);
             JSONObject results = (JSONObject) obj;
 
-            String user_match = results.get(Cons.USER_MATCH).toString();
-            String password_match = results.get(Cons.PASS_MATCH).toString();
-            String user_id = results.get(Cons.USER_ID).toString();
+            String match = results.get(Args.Login.MATCH).toString();
+            String user_id = results.get(Args.Login.USER_ID).toString();
 
-            if (user_match.equals("false")) {
-                Log.d(TAG, "username did not match");
-                Utils.shortToastCenter(context,
-                        "No record of that user, please re-enter username.");
-            }
-            else if (password_match.equals("false")) {
-                Log.d(TAG, "password not correct");
-                Utils.shortToastCenter(context,
-                        "Incorrect password, please re-enter.");
-                password.setText("");
+            if (match.equals("false")) {
+                Log.d(TAG, "no matching username-password");
+                Utils.shortToastCenter(context, "No record of that username-password.");
             }
 
             //user and password match
@@ -274,10 +264,7 @@ public class LoginActivity extends Activity {
             editor.putString(Cons.SOLR_URL, prop.getProperty(Cons.SOLR_URL));
             Log.d(TAG, prop.getProperty(Cons.MAP_RTES));
             editor.putString(Cons.MAP_RTES, prop.getProperty(Cons.MAP_RTES));
-            editor.commit();
+            editor.apply();
         }
     }
-
-
-
 }
