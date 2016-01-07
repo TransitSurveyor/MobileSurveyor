@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.meyersj.mobilesurveyor.app.util.Args;
 import com.meyersj.mobilesurveyor.app.util.Cons;
 
 import org.apache.http.HttpEntity;
@@ -58,8 +59,6 @@ public class StopLookup {
         HttpConnectionParams.setConnectionTimeout(httpParams, 10 * 1000);
         HttpConnectionParams.setSoTimeout(httpParams, 10 * 1000);
         httpParams.setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
-
-
     }
 
     public void findStop(String lat, String lon) {
@@ -74,7 +73,10 @@ public class StopLookup {
         HttpPost post = new HttpPost(params[0]);
         Log.d(TAG, params[0]);
         ArrayList<NameValuePair> postParam = new ArrayList<NameValuePair>();
-        postParam.add(new BasicNameValuePair(Cons.DATA, params[1]));
+        postParam.add(new BasicNameValuePair(Args.StopLookup.RTE, params[1]));
+        postParam.add(new BasicNameValuePair(Args.StopLookup.DIR, params[2]));
+        postParam.add(new BasicNameValuePair(Args.StopLookup.LAT, params[3]));
+        postParam.add(new BasicNameValuePair(Args.StopLookup.LON, params[4]));
 
         try {
             //Log.d(TAG, "execute");
@@ -126,14 +128,12 @@ public class StopLookup {
     }
 
     private String[] buildParams(String lat, String lon) {
-        String[] params = new String[2];
-        JSONObject json = new JSONObject();
-        json.put(Cons.LINE, line);
-        json.put(Cons.DIR, dir);
-        json.put(Cons.LAT, lat);
-        json.put(Cons.LON, lon);
+        String[] params = new String[5];
         params[0] = this.url;
-        params[1] = json.toJSONString();
+        params[1] = line;
+        params[2] = dir;
+        params[3] = lat;
+        params[4] = lon;
         return params;
     }
 
