@@ -1,6 +1,7 @@
 package com.meyersj.mobilesurveyor.app.stops;
 
 import com.mapbox.mapboxsdk.overlay.PathOverlay;
+import com.meyersj.mobilesurveyor.app.util.Args;
 import com.meyersj.mobilesurveyor.app.util.Cons;
 import com.meyersj.mobilesurveyor.app.util.PathUtils;
 import com.meyersj.mobilesurveyor.app.util.Utils;
@@ -116,7 +117,6 @@ public class OnOffMapActivity extends ActionBarActivity {
     private ArrayList<Marker> selList = new ArrayList<Marker>();
     private BoundingBox bbox;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,7 +177,6 @@ public class OnOffMapActivity extends ActionBarActivity {
         Intent i = this.getIntent();
         String action = i.getAction();
 
-
         if (action.equals(ONOFF_ACTION)) {
             setupOnOffSubmitAction();
         }
@@ -237,7 +236,6 @@ public class OnOffMapActivity extends ActionBarActivity {
             }
         });
     }
-
 
     protected void reverseDirection(String mode, Boolean isReversed) {
         if(mode.equals(Cons.ON)) {
@@ -339,7 +337,6 @@ public class OnOffMapActivity extends ActionBarActivity {
                 InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-
     private void setupCounter(int size) {
         countSpinner = (Spinner) findViewById(R.id.count_spinner);
 
@@ -348,10 +345,8 @@ public class OnOffMapActivity extends ActionBarActivity {
             countList.add(i);
         }
 
-        countAdapter = new ArrayAdapter<Integer>(
-                context, R.layout.spinner_item_center, countList);
-        countAdapter.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item);
+        countAdapter = new ArrayAdapter<Integer>(context, R.layout.spinner_item_center, countList);
+        countAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         countSpinner.setAdapter(countAdapter);
 
         countSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -361,21 +356,13 @@ public class OnOffMapActivity extends ActionBarActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
 
         });
-
-
     }
-
-
-
 
     private void setupStopSequenceList() {
         seqView = (View) findViewById(R.id.seq_list);
-
-
         stopSeqBtn = (Button) findViewById(R.id.stop_seq_btn);
         onSeqListView = (ListView) findViewById(R.id.on_stops_seq);
         offSeqListView = (ListView) findViewById(R.id.off_stops_seq);
@@ -464,7 +451,6 @@ public class OnOffMapActivity extends ActionBarActivity {
         });
     }
 
-
     protected ArrayList<Stop> stopsSequenceSort(final ArrayList<Marker> locList) {
         ArrayList<Stop> stops = new ArrayList<Stop>();
 
@@ -475,7 +461,6 @@ public class OnOffMapActivity extends ActionBarActivity {
 
         return stops;
     }
-
 
     protected String[] buildStopsArray(ArrayList<Marker> locList) {
 
@@ -497,27 +482,20 @@ public class OnOffMapActivity extends ActionBarActivity {
         return stopNames;
     }
 
-
     protected void postResults(String onStop, String offStop, Boolean isOnReversed, Boolean isOffReversed) {
         Log.d(TAG, "posting results");
-
         Date date = new Date();
-
         Bundle extras = new Bundle();
         extras.putString(Cons.URL, url);
-        extras.putString(Cons.LINE, line);
-        extras.putString(Cons.DIR, dir);
-        extras.putString(Cons.DATE, Utils.dateFormat.format(date));
-        extras.putString(Cons.ON_STOP, onStop);
-        extras.putString(Cons.OFF_STOP, offStop);
-        extras.putString(Cons.USER_ID, user_id);
         extras.putString(Cons.TYPE, Cons.PAIR);
-        extras.putString(Cons.ON_REVERSED, String.valueOf(isOnReversed));
-        extras.putString(Cons.OFF_REVERSED, String.valueOf(isOffReversed));
-
-        //Intent post = new Intent(context, PostService.class);
-        //post.putExtras(extras);
-        //context.startService(post);
+        extras.putString(Args.Stops.DATE, Utils.dateFormat.format(date));
+        extras.putString(Args.Stops.USER_ID, user_id);
+        extras.putString(Args.Stops.RTE, line);
+        extras.putString(Args.Stops.DIR, dir);
+        extras.putString(Args.Stops.ON_STOP, onStop);
+        extras.putString(Args.Stops.OFF_STOP, offStop);
+        extras.putString(Args.Stops.ON_REVERSED, String.valueOf(isOnReversed));
+        extras.putString(Args.Stops.OFF_REVERSED, String.valueOf(isOffReversed));
 
         Utils.appendCSV("stops", buildPairRow(extras));
         String[] params = getPairParams(extras);
@@ -539,22 +517,19 @@ public class OnOffMapActivity extends ActionBarActivity {
     }
 
     protected String[] getPairParams(Bundle bundle) {
-        String[] params = new String[2];
-        JSONObject json = new JSONObject();
-        json.put(Cons.USER_ID, bundle.getString(Cons.USER_ID));
-        json.put(Cons.DATE, bundle.getString(Cons.DATE));
-        json.put(Cons.LINE, bundle.getString(Cons.LINE));
-        json.put(Cons.DIR, bundle.getString(Cons.DIR));
-        json.put(Cons.ON_STOP, bundle.getString(Cons.ON_STOP));
-        json.put(Cons.OFF_STOP, bundle.getString(Cons.OFF_STOP));
-        json.put(Cons.ON_REVERSED, bundle.getString(Cons.ON_REVERSED));
-        json.put(Cons.OFF_REVERSED, bundle.getString(Cons.OFF_REVERSED));
-        params[0] = Utils.getUrlApi(context) + "/insertPair";
         Log.d(TAG, Utils.getUrlApi(context));
-        params[1] = json.toJSONString();
+        String[] params = new String[9];
+        params[0] = Utils.getUrlApi(context) + "/insertPair";
+        params[1] = bundle.getString(Args.Stops.DATE);
+        params[2] = bundle.getString(Args.Stops.USER_ID);
+        params[3] = bundle.getString(Args.Stops.RTE);
+        params[4] = bundle.getString(Args.Stops.DIR);
+        params[5] = bundle.getString(Args.Stops.ON_STOP);
+        params[6] = bundle.getString(Args.Stops.OFF_STOP);
+        params[7] = bundle.getString(Args.Stops.ON_REVERSED);
+        params[8] = bundle.getString(Args.Stops.OFF_REVERSED);
         return params;
     }
-
 
     class PostTask extends AsyncTask<String[], Void, String> {
 
@@ -574,13 +549,16 @@ public class OnOffMapActivity extends ActionBarActivity {
     protected String post(String[] params) {
 
         String retVal = null;
-
-
-
         HttpPost post = new HttpPost(params[0]);
-
         ArrayList<NameValuePair> postParam = new ArrayList<NameValuePair>();
-        postParam.add(new BasicNameValuePair(Cons.DATA, params[1]));
+        postParam.add(new BasicNameValuePair(Args.Stops.DATE, params[1]));
+        postParam.add(new BasicNameValuePair(Args.Stops.USER_ID, params[2]));
+        postParam.add(new BasicNameValuePair(Args.Stops.RTE, params[3]));
+        postParam.add(new BasicNameValuePair(Args.Stops.DIR, params[4]));
+        postParam.add(new BasicNameValuePair(Args.Stops.ON_STOP, params[5]));
+        postParam.add(new BasicNameValuePair(Args.Stops.OFF_STOP, params[6]));
+        postParam.add(new BasicNameValuePair(Args.Stops.ON_REVERSED, params[7]));
+        postParam.add(new BasicNameValuePair(Args.Stops.OFF_REVERSED, params[8]));
 
         try {
             post.setEntity(new UrlEncodedFormEntity(postParam));
@@ -729,11 +707,8 @@ public class OnOffMapActivity extends ActionBarActivity {
         final Stop board = (Stop) selectedStops.getBoard();
         final Stop alight = (Stop) selectedStops.getAlight();
 
-
         final Boolean isOnReversed = !board.getDir().equals(dir);
         final Boolean isOffReversed = !alight.getDir().equals(dir);
-
-
 
         if (Utils.isNetworkAvailable(context)) {
             String boardLoc = board.getTitle();
@@ -865,5 +840,4 @@ public class OnOffMapActivity extends ActionBarActivity {
             }
         }
     }
-
 }
