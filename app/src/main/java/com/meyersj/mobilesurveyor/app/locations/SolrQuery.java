@@ -112,9 +112,7 @@ public class SolrQuery {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
     }
-
 
     protected LocationResult parseRecord(JSONObject record) {
         LocationResult result = new LocationResult();
@@ -151,7 +149,4 @@ public class SolrQuery {
 
         return result;
     }
-
-
-
 }
