@@ -1,4 +1,4 @@
-package com.meyersj.mobilesurveyor.app.questions.questions;
+package com.meyersj.mobilesurveyor.app.questions.odk;
 
 import android.os.Bundle;
 import android.support.test.espresso.Espresso;
@@ -8,8 +8,8 @@ import android.support.test.espresso.IdlingResource;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.meyersj.mobilesurveyor.app.R;
 import com.meyersj.mobilesurveyor.app.questions.utils.ElapsedTimeIdlingResource;
-import com.meyersj.mobilesurveyor.app.survey.Location.LocationFragment;
-import com.meyersj.mobilesurveyor.app.survey.QuestionActivity;
+import com.meyersj.mobilesurveyor.app.odk.LocationFragment;
+import com.meyersj.mobilesurveyor.app.odk.QuestionActivity;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,7 +36,7 @@ public class LocationSearchTests extends LocationTestBase {
 
     @Before
     public void setUp() {
-        action = QuestionActivity.GEO_LOCATION_ACTION;
+        action = QuestionActivity.ODK_LOCATION_ACTION;
     }
 
     @Test

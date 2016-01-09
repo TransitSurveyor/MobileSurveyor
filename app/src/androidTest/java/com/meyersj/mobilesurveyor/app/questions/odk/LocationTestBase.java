@@ -1,4 +1,4 @@
-package com.meyersj.mobilesurveyor.app.questions.questions;
+package com.meyersj.mobilesurveyor.app.questions.odk;
 
 import android.os.Bundle;
 

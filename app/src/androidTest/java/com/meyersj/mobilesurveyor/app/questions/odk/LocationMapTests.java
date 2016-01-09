@@ -1,4 +1,4 @@
-package com.meyersj.mobilesurveyor.app.questions.questions;
+package com.meyersj.mobilesurveyor.app.questions.odk;
 
 import android.os.Bundle;
 import android.support.test.espresso.ViewAction;
@@ -10,8 +10,8 @@ import android.view.View;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.meyersj.mobilesurveyor.app.R;
-import com.meyersj.mobilesurveyor.app.survey.Location.LocationFragment;
-import com.meyersj.mobilesurveyor.app.survey.QuestionActivity;
+import com.meyersj.mobilesurveyor.app.odk.LocationFragment;
+import com.meyersj.mobilesurveyor.app.odk.QuestionActivity;
 
 import junit.framework.Assert;
 
@@ -26,7 +26,7 @@ public class LocationMapTests extends LocationTestBase {
 
     @Before
     public void setUp() {
-        action = QuestionActivity.GEO_LOCATION_ACTION;
+        action = QuestionActivity.ODK_LOCATION_ACTION;
     }
 
     @Test

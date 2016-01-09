@@ -1,10 +1,10 @@
-package com.meyersj.mobilesurveyor.app.questions.questions;
+package com.meyersj.mobilesurveyor.app.questions.odk;
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v4.app.Fragment;
 
-import com.meyersj.mobilesurveyor.app.survey.QuestionActivity;
+import com.meyersj.mobilesurveyor.app.odk.QuestionActivity;
 
 import junit.framework.Assert;
 
@@ -14,7 +14,7 @@ import org.junit.Rule;
 public abstract class QuestionActivityTestBase {
 
     public final String TAG = getClass().getCanonicalName();
-    public String action = QuestionActivity.GEO_LOCATION_ACTION;
+    public String action = QuestionActivity.ODK_LOCATION_ACTION;
     public QuestionActivity activity;
 
     @Rule
