@@ -1,4 +1,4 @@
-package com.meyersj.mobilesurveyor.app.survey.Location;
+package com.meyersj.mobilesurveyor.app.odk;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,6 +19,7 @@ import com.mapbox.mapboxsdk.views.MapView;
 import com.meyersj.mobilesurveyor.app.R;
 import com.meyersj.mobilesurveyor.app.locations.LocationResult;
 import com.meyersj.mobilesurveyor.app.locations.SolrAdapter;
+import com.meyersj.mobilesurveyor.app.survey.Location.PickLocationMapViewListener;
 import com.meyersj.mobilesurveyor.app.survey.MapFragment;
 import com.meyersj.mobilesurveyor.app.util.Args;
 import com.meyersj.mobilesurveyor.app.util.Cons;
@@ -43,7 +44,7 @@ public class LocationFragment extends MapFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View view = inflater.inflate(R.layout.fragment_geo_location, container, false);
+        View view = inflater.inflate(R.layout.fragment_odk_location, container, false);
         activity = getActivity();
         context = activity.getApplicationContext();
         icon = context.getResources().getDrawable(R.drawable.start);

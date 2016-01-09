@@ -15,7 +15,7 @@
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme"
         android:label="Transit Surveyor"
-        android:name=".survey.SurveyApplication">
+        android:name=".TransitSurveyorApplication">
 
         <activity
             android:name=".menu.LoginActivity"
@@ -93,7 +93,7 @@
         </activity>
 
         <activity
-            android:name=".survey.QuestionActivity"
+            android:name=".odk.QuestionActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/Theme.AppCompat"
             android:screenOrientation="portrait">

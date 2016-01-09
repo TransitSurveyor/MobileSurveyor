@@ -1,4 +1,4 @@
-package com.meyersj.mobilesurveyor.app.survey;
+package com.meyersj.mobilesurveyor.app.odk;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,17 +8,16 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import com.meyersj.mobilesurveyor.app.R;
-import com.meyersj.mobilesurveyor.app.survey.Location.LocationFragment;
 
 public class QuestionActivity extends FragmentActivity {
 
     private final String TAG = getClass().getCanonicalName();
-    public static final String GEO_LOCATION_ACTION = "com.meyersj.mobilesurveyor.app.GEO_LOCATION";
-    public static final String ONOFF_LOCATION_ACTION = "com.meyersj.mobilesurveyor.app.ONOFF_LOCATIONS";
+    public static final String ODK_LOCATION_ACTION = "com.meyersj.mobilesurveyor.app.GEO_LOCATION";
+    public static final String ODK_ONOFF_ACTION = "com.meyersj.mobilesurveyor.app.ONOFF_LOCATIONS";
 
     private String action;
-    private LocationFragment geoFragment;
-    //private OnOffLocationsFragment onOffFragment;
+    private LocationFragment locationFragment;
+    private OnOffFragment onOffFragment;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +30,17 @@ public class QuestionActivity extends FragmentActivity {
             return;
         }
 
-        if (action.equals(GEO_LOCATION_ACTION)) {
-            geoFragment = new LocationFragment();
+        if (action.equals(ODK_LOCATION_ACTION)) {
+            locationFragment = new LocationFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_main, geoFragment).commit();
+                    .add(R.id.fragment_main, locationFragment).commit();
         }
-        else if (action.equals(ONOFF_LOCATION_ACTION)) {}
+        else if (action.equals(ODK_ONOFF_ACTION)) {
+            onOffFragment = new OnOffFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_main, onOffFragment).commit();
+
+        }
     }
 
     @Override
@@ -52,11 +56,11 @@ public class QuestionActivity extends FragmentActivity {
         Intent intent = this.getIntent();
         action = intent.getAction();
 
-        if (action.equals(GEO_LOCATION_ACTION)) {
+        if (action.equals(ODK_LOCATION_ACTION)) {
             Log.d(TAG, "Geo Extras");
             return intent.getExtras();
         }
-        else if (action.equals(ONOFF_LOCATION_ACTION)) {
+        else if (action.equals(ODK_ONOFF_ACTION)) {
             Log.d(TAG, "OnOff Extras");
             return intent.getExtras();
         }
@@ -68,22 +72,22 @@ public class QuestionActivity extends FragmentActivity {
     }
 
     public Fragment getFragment() {
-        if (action.equals(GEO_LOCATION_ACTION)) {
-            return geoFragment;
+        if (action.equals(ODK_LOCATION_ACTION)) {
+            return locationFragment;
         }
-        else if (action.equals(ONOFF_LOCATION_ACTION)) {
-            //return onOffFragment;
+        else if (action.equals(ODK_ONOFF_ACTION)) {
+            return onOffFragment;
         }
         return null;
     }
 
     public void exit() {
-        if (action.equals(GEO_LOCATION_ACTION)) {
-            if (geoFragment != null) {
-                geoFragment.exit(this);
+        if (action.equals(ODK_LOCATION_ACTION)) {
+            if (locationFragment != null) {
+                locationFragment.exit(this);
             }
         }
-        else if (action.equals(ONOFF_LOCATION_ACTION)) {
+        else if (action.equals(ODK_ONOFF_ACTION)) {
             //
             //
         }
