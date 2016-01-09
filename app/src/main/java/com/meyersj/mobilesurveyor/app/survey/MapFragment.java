@@ -96,8 +96,8 @@ public abstract class MapFragment extends Fragment {
         ITileLayer mbTilesSource;
         String url = "http://a.tile2.opencyclemap.org/transport/{z}/{x}/{y}.png";
         url = "http://tilea.trimet.org/tilecache/tilecache.py/1.0.0/currentOSM/{z}/{x}/{y}";
-        ITileLayer osmSource = new WebSourceTileLayer("openstreetmap",
-                url).setName("OpenStreetMap")
+        ITileLayer osmSource = new WebSourceTileLayer("openstreetmap", url)
+                .setName("OpenStreetMap")
                 .setAttribution("© OpenStreetMap Contributors");
         try {
             File tiles = new File(TILESPATH, TILESNAME);

@@ -36,7 +36,6 @@
             </intent-filter>
         </activity>
 
-
         <activity
             android:name=".menu.SetLineActivity"
             android:screenOrientation="portrait">
@@ -74,7 +73,6 @@
 
         </activity>
 
-
         <activity
             android:name=".survey.SurveyActivity"
             android:hardwareAccelerated="false"
@@ -83,14 +81,30 @@
             android:screenOrientation="portrait">
 
             <intent-filter >
-                <!--action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" /-->
                 <action android:name="com.meyersj.mobilesurveyor.app.SURVEY" />
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <intent-filter >
                 <action android:name="com.meyersj.mobilesurveyor.app.ODK_SURVEY" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".survey.QuestionActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:theme="@style/Theme.AppCompat"
+            android:screenOrientation="portrait">
+
+            <intent-filter >
+                <action android:name="com.meyersj.mobilesurveyor.app.GEO_LOCATION" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+            <intent-filter >
+                <action android:name="com.meyersj.mobilesurveyor.app.ONOFF_LOCATION" />
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 

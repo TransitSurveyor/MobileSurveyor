@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.mapbox.mapboxsdk.views.MapView
+        android:id="@+id/mapview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
+
+        <include layout="@layout/solr_widget_layout"></include>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\u00A9 OpenStreetMap contributors"
+            android:gravity="right"
+            android:textSize="20px"
+            android:textColor="@color/black"
+            android:layout_above="@+id/submit"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"/>
+
+        <Button
+            android:id="@id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:textSize="25px"
+            android:textColor="@color/black"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="5dp"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

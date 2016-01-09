@@ -8,6 +8,7 @@ import com.mapbox.mapboxsdk.overlay.ItemizedIconOverlay;
 import com.mapbox.mapboxsdk.overlay.Marker;
 import com.mapbox.mapboxsdk.views.MapView;
 import com.mapbox.mapboxsdk.views.MapViewListener;
+import com.meyersj.mobilesurveyor.app.survey.MapFragment;
 import com.meyersj.mobilesurveyor.app.survey.SurveyManager;
 
 
@@ -16,10 +17,17 @@ public class PickLocationMapViewListener implements MapViewListener {
     private ItemizedIconOverlay locOverlay;
     private SurveyManager manager;
     private String mode;
+    private Drawable icon;
     private Drawable circle;
     private Drawable square;
-    private PickLocationFragment fragment;
+    private MapFragment fragment;
 
+
+    public PickLocationMapViewListener(MapFragment fragment, ItemizedIconOverlay locOverlay, Drawable icon) {
+        this.locOverlay = locOverlay;
+        this.icon = icon;
+        this.fragment = fragment;
+    }
 
     public PickLocationMapViewListener(PickLocationFragment fragment, ItemizedIconOverlay locOverlay, SurveyManager manager, String mode,
                                        Drawable circle, Drawable square) {
@@ -62,6 +70,9 @@ public class PickLocationMapViewListener implements MapViewListener {
                 m.setMarker(square);
             }
             manager.setLocation(m, mode);
+        }
+        else {
+            m.setMarker(icon);
         }
         locOverlay.removeAllItems();
         locOverlay.addItem(m);
