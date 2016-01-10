@@ -1,4 +1,4 @@
-package com.meyersj.mobilesurveyor.app.locations;
+package com.meyersj.mobilesurveyor.app.solr;
 
 import android.content.Context;
 import android.util.Log;
@@ -16,16 +16,13 @@ import java.util.Map;
 
 public class SolrAdapter extends ArrayAdapter<String> implements Filterable {
 
-    private final String TAG = "SolrAdapter";
-
-    private Context mContext;
-    private List<String> mData = new ArrayList<String>();
+    private final String TAG = getClass().getCanonicalName();;
+    private List<String> mData = new ArrayList<>();
     private SolrQuery mSolrQuery;
     private HashMap<String, LocationResult> mResults;
 
     public SolrAdapter(Context context, int resource, String url) {
         super(context, resource);
-        mContext = context;
         mSolrQuery = new SolrQuery(url);
     }
 
@@ -34,21 +31,17 @@ public class SolrAdapter extends ArrayAdapter<String> implements Filterable {
         return mData.size();
     }
 
-
     @Override
     public String getItem(int index) {
         return mData.get(index);
     }
 
-
     //used to retrieve item picked after user selection
     public LocationResult getLocationResultItem(String name) {
-
         LocationResult locationResult = null;
         if (mResults.containsKey(name)) {
             locationResult = mResults.get(name);
         }
-
         return locationResult;
     }
 
@@ -79,41 +72,35 @@ public class SolrAdapter extends ArrayAdapter<String> implements Filterable {
             String n = names.get(i);
             names.set(i, n.substring(n.indexOf("|") + 1));
         }
-
         return names;
     }
 
     @Override
     public Filter getFilter() {
-        Filter myFilter = new Filter() {
+        Filter filter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-
                 List<String> results;
                 // This method is called in a worker thread
                 FilterResults filterResults = new FilterResults();
                 if(constraint != null) {
                     try {
                         //fetch data from Solr Server
-                        mSolrQuery.solrLookup(constraint.toString());
+                        mSolrQuery.solrSearch(constraint.toString());
                         mResults = mSolrQuery.getSolrResults();
-
                         //extract names to be displayed in UI
                         results = getNames(mResults);
                         filterResults.values = results;
                         filterResults.count = results.size();
-
                     } catch (Exception e) {
                         Log.e(TAG, "Filter failed");
                     }
                 }
-
                 return filterResults;
             }
 
             @Override
             protected void publishResults(CharSequence contraint, FilterResults results) {
-
                 if(results != null && results.count > 0) {
                     mData = (List<String>) results.values;
                     notifyDataSetChanged();
@@ -123,9 +110,6 @@ public class SolrAdapter extends ArrayAdapter<String> implements Filterable {
                 }
             }
         };
-        return myFilter;
+        return filter;
     }
-
 }
-
-

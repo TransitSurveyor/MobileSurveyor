@@ -1,4 +1,4 @@
-package com.meyersj.mobilesurveyor.app.locations;
+package com.meyersj.mobilesurveyor.app.solr;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
@@ -43,8 +43,4 @@ public class LocationResult {
             return false;
         }
     }
-
-
-
-
 }
