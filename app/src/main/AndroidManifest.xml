@@ -3,12 +3,8 @@
     package="com.meyersj.mobilesurveyor.app">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -18,114 +14,14 @@
         android:name=".TransitSurveyorApplication">
 
         <activity
-            android:name=".menu.LoginActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:screenOrientation="portrait">
+            android:name=".LocationActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.meyersj.mobilesurveyor.app.LOGIN" />
+                <action android:name="com.meyersj.mobilesurveyor.app.ODK_LOCATION" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".menu.SettingsActivity">
-            <intent-filter >
-                <action android:name="com.meyersj.mobilesurveyor.app.SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".menu.SetLineActivity"
-            android:screenOrientation="portrait">
-            <intent-filter >
-                <action android:name="com.meyersj.mobilesurveyor.app.SETLINE" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".scans.ScannerActivity"
-            android:screenOrientation="portrait">
-            <intent-filter >
-                <action android:name="com.meyersj.mobilesurveyor.app.SCANNER" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".stops.OnOffMapActivity"
-            android:hardwareAccelerated="false"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:theme="@style/Theme.AppCompat"
-            android:screenOrientation="portrait">
-
-            <intent-filter >
-                <action android:name="com.meyersj.mobilesurveyor.app.ONOFFMAP" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-
-            <intent-filter >
-                <action android:name="com.meyersj.mobilesurveyor.app.ODK_ONOFFMAP" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-
-        </activity>
-
-        <activity
-            android:name=".survey.SurveyActivity"
-            android:hardwareAccelerated="false"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:theme="@style/Theme.AppCompat"
-            android:screenOrientation="portrait">
-
-            <intent-filter >
-                <action android:name="com.meyersj.mobilesurveyor.app.SURVEY" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-
-            <intent-filter >
-                <action android:name="com.meyersj.mobilesurveyor.app.ODK_SURVEY" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-
-        </activity>
-
-        <activity
-            android:name=".odk.QuestionActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:theme="@style/Theme.AppCompat"
-            android:screenOrientation="portrait">
-
-            <intent-filter >
-                <action android:name="com.meyersj.mobilesurveyor.app.GEO_LOCATION" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-
-            <intent-filter >
-                <action android:name="com.meyersj.mobilesurveyor.app.ONOFF_LOCATION" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-
-        </activity>
-
-        <activity
-            android:name=".locations.PickLocationActivity"
-            android:hardwareAccelerated="false"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:theme="@style/Theme.AppCompat"
-            android:screenOrientation="portrait">
-            <intent-filter >
-
-                <action android:name="com.meyersj.mobilesurveyor.app.PICKLOCATION" />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-
-        <service
-            android:name=".scans.LocationService"
-            android:exported="false"/>
 
     </application>
 
