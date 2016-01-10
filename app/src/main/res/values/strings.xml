@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">LocationSurvey</string>
-    <string name="action_settings">Settings</string>
-    <string name="record_string">Start Recording</string>
-    <string name="line_prompt">Select Line</string>
-    <string name="dir_prompt">Select Direction</string>
-    <string name="dummy_section_text">dummy section text</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">VectorTransitSurvey</string>
 
 </resources>
