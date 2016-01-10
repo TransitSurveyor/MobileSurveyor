@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
-apply plugin: 'newrelic'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 6
-        versionName "0.7.0"
+        minSdkVersion 18
+        targetSdkVersion 23
+        versionCode 7
+        versionName "0.8.0"
         applicationId "com.meyersj.mobilesurveyor.app"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -23,15 +22,11 @@ android {
 }
 
 dependencies {
-
-    compile 'com.android.support:appcompat-v7:22.+'
-    compile 'com.newrelic.agent.android:android-agent:5.+'
-    compile 'me.dm7.barcodescanner:zxing:1.0'
-	compile 'com.googlecode.json-simple:json-simple:1.1'
-    compile 'joda-time:joda-time:2.3'
-    compile 'net.sf.opencsv:opencsv:2.3'
-
-    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:0.4.0@aar') {
+    compile 'com.android.support:appcompat-v7:23.+'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.squareup.okhttp3:okhttp:3.0.0-RC1'
+    compile 'com.googlecode.json-simple:json-simple:1.1'
+    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:3.0.0@aar'){
         transitive=true
     }
 
