@@ -1,4 +1,4 @@
-package com.meyersj.mobilesurveyor.app.solr;
+package com.meyersj.mobilesurveyor.app.geocode;
 
 import android.content.Context;
 import android.util.Log;

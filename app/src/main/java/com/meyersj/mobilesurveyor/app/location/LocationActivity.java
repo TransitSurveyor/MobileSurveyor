@@ -1,4 +1,4 @@
-package com.meyersj.mobilesurveyor.app;
+package com.meyersj.mobilesurveyor.app.location;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +14,9 @@ import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.constants.Style;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.views.MapView;
+import com.meyersj.mobilesurveyor.app.Fields;
+import com.meyersj.mobilesurveyor.app.R;
+import com.meyersj.mobilesurveyor.app.Utils;
 import com.meyersj.mobilesurveyor.app.solr.LocationResult;
 import com.meyersj.mobilesurveyor.app.solr.SolrAdapter;
 
