@@ -46,7 +46,7 @@ public class SolrAdapter extends ArrayAdapter<String> implements Filterable {
     }
 
     public List<String> getNames(Map mp) {
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
 
         //add score to beginning of string and add to list
         Iterator it = mp.entrySet().iterator();
@@ -54,7 +54,7 @@ public class SolrAdapter extends ArrayAdapter<String> implements Filterable {
             Map.Entry pairs = (Map.Entry)it.next();
             //build string with score and name
             //0.992|NW 5th and Davis
-            String name = mResults.get(pairs.getKey()).getScore().toString() + "|" + pairs.getKey();
+            String name = mResults.get(pairs.getKey()).score.toString() + "|" + pairs.getKey();
             names.add(name);
         }
 

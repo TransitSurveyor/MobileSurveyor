@@ -71,8 +71,8 @@ public class SolrQuery {
                 JSONObject record = (JSONObject) j;
                 LocationResult result = parseRecord(record);
                 if (result != null) {
-                    Log.d(TAG, result.getAddress());
-                    solrResults.put(result.getAddress(), result);
+                    Log.d(TAG, result.address);
+                    solrResults.put(result.address, result);
                 }
                 else {
                     Log.e(TAG, "parseRecord not successful");
@@ -85,31 +85,23 @@ public class SolrQuery {
 
     protected LocationResult parseRecord(JSONObject record) {
         LocationResult result = new LocationResult();
+        result.address = "";
         if (record.containsKey("score")) {
-            result.setScore(record.get("score").toString());
+            result.score = (Double) record.get("score");
         }
         if(record.containsKey("lat") && record.containsKey("lon")) {
-            result.setLatLng(record.get("lat").toString(),record.get("lon").toString());
+            result.setLatLng((Double) record.get("lat"), (Double) record.get("lon"));
         }
         if(record.containsKey("city") && record.containsKey("name")){
             String name = record.get("name").toString();
             String city = record.get("city").toString();
             if (!city.equals("") && !name.equals("")) {
-                result.setAddress(name + ", " + city);
+                result.address = name + ", " + city;
             }
             else if (!name.equals("")) {
-                result.setAddress(name);
-            }
-            else {
-                result.setAddress(null);
+                result.address = name;
             }
         }
-        else {
-            result.setAddress(null);
-        }
-        if (!result.isValid()) {
-            result = null;
-        }
-        return result;
+        return result.isValid() ? result : null;
     }
 }
