@@ -14,11 +14,21 @@
         android:name=".TransitSurveyorApplication">
 
         <activity
-            android:name=".LocationActivity"
+            android:name=".location.LocationActivity"
             android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="com.meyersj.mobilesurveyor.app.ODK_LOCATION" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".onoff.OnOffActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.meyersj.mobilesurveyor.app.ODK_ONOFF" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
