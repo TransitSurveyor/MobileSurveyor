@@ -7,7 +7,7 @@ import android.support.test.rule.ActivityTestRule;
 
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.meyersj.mobilesurveyor.app.Fields;
-import com.meyersj.mobilesurveyor.app.LocationActivity;
+import com.meyersj.mobilesurveyor.app.location.LocationActivity;
 
 import junit.framework.Assert;
 

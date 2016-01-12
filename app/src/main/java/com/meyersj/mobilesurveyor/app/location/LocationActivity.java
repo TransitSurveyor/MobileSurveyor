@@ -17,8 +17,8 @@ import com.mapbox.mapboxsdk.views.MapView;
 import com.meyersj.mobilesurveyor.app.Fields;
 import com.meyersj.mobilesurveyor.app.R;
 import com.meyersj.mobilesurveyor.app.Utils;
-import com.meyersj.mobilesurveyor.app.solr.LocationResult;
-import com.meyersj.mobilesurveyor.app.solr.SolrAdapter;
+import com.meyersj.mobilesurveyor.app.geocode.LocationResult;
+import com.meyersj.mobilesurveyor.app.geocode.SolrAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -116,8 +116,8 @@ public class LocationActivity extends Activity {
                 String address = parent.getItemAtPosition(position).toString();
                 LocationResult locationResult = adapter.getLocationResultItem(address);
                 if (locationResult != null) {
-                    mapView.setCenterCoordinate(locationResult.getLatLng());
-                    selectLocation(locationResult.getLatLng());
+                    mapView.setCenterCoordinate(locationResult.latLng);
+                    selectLocation(locationResult.latLng);
                 }
                 Utils.closeKeypad(activity);
             }
