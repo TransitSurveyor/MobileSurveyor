@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".location.LocationActivity">
+
+    <com.mapbox.mapboxsdk.views.MapView
+        android:id="@+id/mapview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <AutoCompleteTextView
+        android:id="@+id/textview_solr_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/center_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview_solr_search"
+        android:layout_above="@+id/button_save"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_stops_lists"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="List Stops"/>
+
+        <!-- Split View Group in half vertically for on and off stop sequences -->
+
+        <LinearLayout
+            android:id="@+id/layout_stops_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="invisible" >
+
+            <!-- On stops list ListView (left side of screen) -->
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button_on_stops"
+                    android:text="On Stop"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+
+                <ListView
+                    android:id="@+id/listview_on_stops"
+                    android:divider="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:choiceMode="singleChoice"/>
+
+            </LinearLayout>
+
+            <!-- Off stops list ListView (right side of screen) -->
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/button_off_stops"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:text="Off Stop"/>
+
+                <ListView
+                    android:id="@+id/listview_off_stops"
+                    android:divider="@null"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:choiceMode="singleChoice"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@id/button_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Location"
+        android:layout_margin="8dp"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>
